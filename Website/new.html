@@ -23,6 +23,26 @@
   <div id="map-container">
     <div id="map"></div>
   </div>
+  
+  <!-- Review Section -->
+<div class="review-section">
+  <h3>Leave a Review</h3>
+  
+  <!-- Rating System -->
+  <div class="rating">
+    <span class="star" data-value="1">&#9733;</span>
+    <span class="star" data-value="2">&#9733;</span>
+    <span class="star" data-value="3">&#9733;</span>
+    <span class="star" data-value="4">&#9733;</span>
+    <span class="star" data-value="5">&#9733;</span>
+  </div>
+  
+  <!-- Textarea for Review -->
+  <textarea id="review-text" placeholder="Write your review here..."></textarea>
+  
+  <!-- Submit Button -->
+  <button class="submit-review" onclick="submitReview()">Submit</button>
+</div>
 
   <!-- Add the help button -->
 <icon class="help-button" onclick="openHelp()">
@@ -219,6 +239,7 @@
               </td>
           </tr>
       </table>
+    
   </div>
 </div>
 <div id="popup-search" style="display: none;">
