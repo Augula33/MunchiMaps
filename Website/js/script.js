@@ -244,15 +244,15 @@ const building_data = [
         this.images = setImages(this.name, this.num_snack_machines, this.num_drink_machines);
 
         this.infoWindowContent = `
-        <div class="info-window-content">
-          <div class="info-window-image">
+    <div class="info-window-content">
+        <div class="info-window-image">
             ${this.images}
-              <div class="carousel-controls">
-                  <button class="prev">&lt;</button>
-                  <button class="next">&gt;</button>
-              </div>
-          </div>
-          <div class="info-window-text">
+            <div class="carousel-controls">
+                <button class="prev">&lt;</button>
+                <button class="next">&gt;</button>
+            </div>
+        </div>
+        <div class="info-window-text">
             <div class="info-window-title">${this.name}</div>
             <div class="info-window-icons">
                 <img src="${this.image1}">
@@ -261,27 +261,69 @@ const building_data = [
             </div>
             <div class="info-window-subtitle">${this.description}</div>
             <div class="review-section">
-              <div class="reviews">
-                <!-- Existing reviews will be appended here -->
-              </div>
-              <h4>Write a Review</h4>
-              <div class="rating_block>
-                <form class="submit-review">
-                <textarea id="review-text" placeholder="Write your review here..." required></textarea>
-                <div class="rating">
-                  <span rating-star="5"><img src="https://github.com/mike-cautela/MunchiMaps/blob/main/Website/MunchiMaps%20Assets/CookieFavicon.png?raw=true" alt="Star 5" width="30" height="30"></span>
-                  <span rating-star="4"><img src="https://github.com/mike-cautela/MunchiMaps/blob/main/Website/MunchiMaps%20Assets/CookieFavicon.png?raw=true" alt="Star 4" width="30" height="30"></span>
-                  <span rating-star="3"><img src="https://github.com/mike-cautela/MunchiMaps/blob/main/Website/MunchiMaps%20Assets/CookieFavicon.png?raw=true" alt="Star 3" width="30" height="30"></span>
-                  <span rating-star="2"><img src="https://github.com/mike-cautela/MunchiMaps/blob/main/Website/MunchiMaps%20Assets/CookieFavicon.png?raw=true" alt="Star 2" width="30" height="30"></span>
-                  <span rating-star="1"><img src="https://github.com/mike-cautela/MunchiMaps/blob/main/Website/MunchiMaps%20Assets/CookieFavicon.png?raw=true" alt="Star 1" width="30" height="30"></span>
+                <div class="reviews">
+                    <!-- Existing reviews will be appended here -->
                 </div>
-                <button type="submit">Submit</button>
-                </form>
-              </div>
+                <h4>Write a Review</h4>
+                <div class="rating_block">
+                    <form class="submit-review">
+                        <textarea id="review-text" placeholder="Write your review here..." required></textarea>
+                        <div class="rating" id="rating-stars">
+                            ${[5, 4, 3, 2, 1].map(star => `
+                                <span rating-star="${star}" class="star">
+                                    <img src="https://github.com/mike-cautela/MunchiMaps/blob/main/Website/MunchiMaps%20Assets/CookieFavicon.png?raw=true" alt="Star ${star}" width="30" height="30">
+                                </span>
+                            `).join('')}
+                        </div>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
             </div>
         </div>
-        </div>`;
-        this.infoWindow;
+    </div>`;
+
+this.infoWindow;
+
+
+// JavaScript to handle the rating selection
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOMContentLoaded event fired"); // Debugging line
+    const stars = document.querySelectorAll('.rating span');
+    console.log("Stars found:", stars.length); // Check if stars are found
+    let selectedRating = 0;
+
+    stars.forEach((star, index) => {
+        // Highlight stars up to the one hovered over
+        star.addEventListener('mouseover', () => {
+            highlightStars(index + 1);
+        });
+
+        // Reset highlight when mouse leaves
+        star.addEventListener('mouseout', () => {
+            highlightStars(selectedRating);
+        });
+
+        // Set rating on click
+        star.addEventListener('click', () => {
+            selectedRating = index + 1;
+            highlightStars(selectedRating);
+            console.log(`Star ${index + 1} clicked!`); // Test if click works
+        });
+    });
+
+    // Function to highlight stars based on rating
+    function highlightStars(rating) {
+        stars.forEach((star, index) => {
+            if (index < rating) {
+                star.classList.add('selected'); // Apply the 'selected' class
+            } else {
+                star.classList.remove('selected');
+            }
+        });
+    }
+});
+
+
       }
         plot() {
           this.marker = L.marker([this.x_coord, this.y_coord], { icon: options[this.img_icon] }).addTo(map);
@@ -397,7 +439,13 @@ const building_data = [
           toggleDarkMode();
         }
       });
+      
+      // console.log("Testing outside DOMContentLoaded");
+      // const stars = document.querySelectorAll('.rating span');
+      // console.log("Stars found outside DOMContentLoaded:", stars.length);
     } // init map ending bracket here
+
+
 
     function openHelp() {
       closeAllPopups('Report');
