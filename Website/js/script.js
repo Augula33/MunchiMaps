@@ -547,6 +547,7 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => {
             popup.style.display = "none";
         }, 500);
+    }
 
 
   //Closes all popups when user clicks on second popup. 
