@@ -673,6 +673,16 @@ color: #92b3b5;
 z-index: 1000;
 }
 
+#popup-report .popup-close {
+position: absolute;
+top: 10px;
+right: 20px;
+cursor: pointer;
+font-size: 24px;
+font-weight: bold;
+color: #92b3b5;
+}
+
 .report {
 background: black;
 color: #92b3b5;
