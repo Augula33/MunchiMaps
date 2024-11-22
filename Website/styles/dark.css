@@ -150,11 +150,12 @@ height: 100%;
 overflow: auto; 
 background-color: rgb(0,0,0); 
 background-color: rgba(0,0,0,0.4); 
+color: #92b3b5;
 font-family: 'Courier New'; 
 }
 
 .help-content {
-background-color: #fefefe;
+background-color: black;
 margin: 15% auto; 
 padding: 20px;
 border: 1px solid #888;
@@ -249,11 +250,12 @@ margin-right: 10px;
   height: 100%; 
   overflow: auto; 
   background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent black background */
+  color: #92b3b5;
   font-family: 'Courier New';
 }
   
 .map-key-content {
-  background-color: #fefefe;
+  background-color: black;
   margin: 15% auto; 
   padding: 20px;
   border: 1px solid #888;
