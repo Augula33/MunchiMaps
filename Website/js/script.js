@@ -513,15 +513,27 @@ document.addEventListener('DOMContentLoaded', () => {
               .openOn(map);
 
           // Trigger the route display when a vending machine is clicked
-          map.locate({
-              watch: false,
-              setView: false,
-          }).on('locationfound', (e) => {
-              const userLocation = e.latlng; // User's current location
+          if (!this.userLocation) {
+              map.locate({
+                  watch: false,
+                  setView: true,  // Optionally zoom to the user's location
+              }).on('locationfound', (e) => {
+                  this.userLocation = e.latlng;  // Store the user's location when found
+                  const userLocation = this.userLocation; // User's current location
+                  const vendingLocation = { lat: this.x_coord, lng: this.y_coord }; // Vending machine location
+                  showRoute(userLocation, vendingLocation);  // Display route
+              }).on('locationerror', (err) => {
+                  console.error('Location not found:', err.message);
+                  alert('Unable to access your location.');
+              });
+          } else {
+              // If the user location is already known, just show the route
+              const userLocation = this.userLocation;
               const vendingLocation = { lat: this.x_coord, lng: this.y_coord }; // Vending machine location
               showRoute(userLocation, vendingLocation);
-          });
+          }
       });
+
 
       
       
