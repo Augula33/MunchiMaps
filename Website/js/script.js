@@ -21,6 +21,8 @@ const building_data = [
   {name:"West Hall", x_coord:42.731807801585866, y_coord:-73.68320404747236, time_opens:0.00, time_closes:24.00, num_snack_machines:0, num_drink_machines:1},
 ];
 
+var L;
+var map;
  //initializes the map
     function initMap() {
       map = L.map('map').setView([42.72941085967446, -73.6792590320996], 17);
@@ -120,7 +122,7 @@ const building_data = [
       
       // Test area ------------------------------------------- 
 
-      options = [foodanddrink, food, drink];
+      var options = [foodanddrink, food, drink];
       
        //generating the description based on image that it is given
        function generatedescription(image1, image2, image3) {
@@ -394,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // It allows the search feature and the map plotting to use the same building_data array (which can be found at the top of this file)
       var buildings = [];
       for(let i=0; i<building_data.length; i++) {
-        temp = new icon(
+        var temp = new icon(
             building_data[i].name,
             building_data[i].x_coord,
             building_data[i].y_coord,
@@ -544,7 +546,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function showInfoHelper(locationName){
-  const icon = icons[locationName];
+  const icon = building_data[locationName];
   console.log("External function called for:", icon);
   console.log('Toggling icon:', icon);
   console.log('Coordinates:', icon.x_coord, icon.y_coord);
