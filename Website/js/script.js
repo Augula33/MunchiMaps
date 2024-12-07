@@ -284,6 +284,35 @@ const building_data = [
 
 this.infoWindow;
 
+        const container = document.querySelector('.info-window-content');
+        if (container) {
+            const reviewForm = container.querySelector('.submit-review');
+            if (reviewForm) {
+                reviewForm.addEventListener('submit', (event) => {
+                    event.preventDefault();
+                    const reviewText = container.querySelector('#review-text').value;
+                    const selectedStar = container.querySelector('.star.selected');
+
+                    if (reviewText.trim() && selectedStar) {
+                        const rating = selectedStar.getAttribute('rating-star');
+                        console.log('Review Submitted:', { reviewText, rating });
+                        // add code for handling review submissions
+                    } else {
+                        alert('Please fill out the review and select a rating.');
+                    }
+                });
+            }
+
+            // Handle star selection
+            const stars = container.querySelectorAll('.rating .star');
+            stars.forEach((star) => {
+                star.addEventListener('click', () => {
+                    stars.forEach((s) => s.classList.remove('selected'));
+                    star.classList.add('selected');
+                });
+            });
+        }
+
 
 // JavaScript to handle the rating selection
 document.addEventListener('DOMContentLoaded', () => {
