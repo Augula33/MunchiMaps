@@ -244,46 +244,46 @@ const building_data = [
         this.images = setImages(this.name, this.num_snack_machines, this.num_drink_machines);
 
         this.infoWindowContent = `
-    <div class="info-window-content">
-        <div class="info-window-image">
-            ${this.images}
-            <div class="carousel-controls">
-                <button class="prev">&lt;</button>
-                <button class="next">&gt;</button>
-            </div>
-        </div>
-        <div class="info-window-text">
-            <div class="info-window-title">${this.name}</div>
-            <div class="info-window-icons">
-                <img src="${this.image1}">
-                <img src="${this.image2}" alt="Image 2">
-                <img src="${this.image3}" alt="Image 3">
-            </div>
-            <div class="info-window-subtitle">${this.description}</div>
-            <div class="review-section">
-                <div class="reviews">
-                    <!-- Existing reviews will be appended here -->
+            <div class="info-window-content">
+                <div class="info-window-image">
+                    ${this.images}
+                    <div class="carousel-controls">
+                        <button class="prev">&lt;</button>
+                        <button class="next">&gt;</button>
+                    </div>
                 </div>
-                <h4>Write a Review</h4>
-                <div class="rating_block">
-                    <form class="submit-review">
-                        <textarea id="review-text" placeholder="Write your review here..." required></textarea>
-                        <div class="rating" id="rating-stars">
-                            ${[5, 4, 3, 2, 1].map(star => `
-                                <span rating-star="${star}" class="star">
-                                    <img src="https://github.com/mike-cautela/MunchiMaps/blob/main/Website/MunchiMaps%20Assets/CookieFavicon.png?raw=true" alt="Star ${star}" width="30" height="30">
-                                </span>
-                            `).join('')}
+                <div class="info-window-text">
+                    <div class="info-window-title">${this.name}</div>
+                    <div class="info-window-icons">
+                        <img src="${this.image1}">
+                        <img src="${this.image2}" alt="Image 2">
+                        <img src="${this.image3}" alt="Image 3">
+                    </div>
+                    <div class="info-window-subtitle">${this.description}</div>
+                    <div class="review-section">
+                        <div class="reviews">
+                            <!-- Existing reviews will be appended here -->
                         </div>
-                        <button type="submit">Submit</button>
-                    </form>
+                        <h4>Write a Review</h4>
+                        <div class="rating_block">
+                            <form class="submit-review">
+                                <textarea id="review-text" placeholder="Write your review here..." required></textarea>
+                                <div class="rating" id="rating-stars">
+                                    ${[5, 4, 3, 2, 1].map(star => `
+                                        <span rating-star="${star}" class="star">
+                                            <img src="https://github.com/mike-cautela/MunchiMaps/blob/main/Website/MunchiMaps%20Assets/CookieFavicon.png?raw=true" alt="Star ${star}" width="30" height="30">
+                                        </span>
+                                    `).join('')}
+                                </div>
+                                <button type="submit">Submit</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>`;
+            </div>`;
 
-this.infoWindow;
-
+        this.infoWindow;
+        
         const container = document.querySelector('.info-window-content');
         if (container) {
             const reviewForm = container.querySelector('.submit-review');
@@ -312,6 +312,8 @@ this.infoWindow;
                 });
             });
         }
+
+
 
 
 // JavaScript to handle the rating selection
@@ -472,8 +474,47 @@ document.addEventListener('DOMContentLoaded', () => {
       // console.log("Testing outside DOMContentLoaded");
       // const stars = document.querySelectorAll('.rating span');
       // console.log("Stars found outside DOMContentLoaded:", stars.length);
+      
+      
+      let routingControl; 
+
+      function showRoute(start, end) {
+          if (routingControl) {
+              map.removeControl(routingControl);
+          }
+
+          // Add a new route
+          routingControl = L.Routing.control({
+              waypoints: [L.latLng(start.lat, start.lng), L.latLng(end.lat, end.lng)],
+              routeWhileDragging: true,
+              showAlternatives: false,
+              createMarker: function() { return null; }
+          }).addTo(map);
+      }
+
+      this.marker.on('click', () => {
+          this.infoWindow = L.popup({ maxWidth: 500 })
+              .setLatLng([this.x_coord, this.y_coord])
+              .setContent(this.infoWindowContent)
+              .openOn(map);
+
+          // Trigger the route display when a vending machine is clicked
+          map.locate({
+              watch: false,
+              setView: false,
+          }).on('locationfound', (e) => {
+              const userLocation = e.latlng; // User's current location
+              const vendingLocation = { lat: this.x_coord, lng: this.y_coord }; // Vending machine location
+              showRoute(userLocation, vendingLocation);
+          });
+      });
+
+      
+      
+      
     } // init map ending bracket here
 
+    
 
 
     function openHelp() {
@@ -592,7 +633,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 // Handle report form submission
 document.addEventListener('DOMContentLoaded', function () {
-    initMap();
+    //initMap();
 
     const reportForm = document.getElementById('reportForm');
     reportForm.addEventListener('submit', function(event) {
