@@ -615,6 +615,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-document.querySelector(".btn-fixx").onclick = function () {
-    window.location.href = "https://www.google.com";
-};
+document.addEventListener("click", function (event) {
+    if (event.target.matches(".btn-fixx")) {
+        window.location.href = "https://www.google.com";
+    }
+});
