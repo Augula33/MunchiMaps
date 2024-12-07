@@ -482,17 +482,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
       function showRoute(start, end) {
           if (routingControl) {
-              map.removeControl(routingControl);
+              map.removeControl(routingControl); // Remove the existing route if there is one
+          }
+
+          // Check if the start and end coordinates are valid
+          if (!start || !end || !start.lat || !start.lng || !end.lat || !end.lng) {
+              console.error('Invalid start or end coordinates');
+              return;
           }
 
           // Add a new route
           routingControl = L.Routing.control({
-              waypoints: [L.latLng(start.lat, start.lng), L.latLng(end.lat, end.lng)],
-              routeWhileDragging: true,
-              showAlternatives: false,
-              createMarker: function() { return null; }
+              waypoints: [
+                  L.latLng(start.lat, start.lng), // User location
+                  L.latLng(end.lat, end.lng)      // Vending machine location
+              ],
+              routeWhileDragging: true,  // Allow dragging the route
+              showAlternatives: false,   // No alternative routes
+              createMarker: function() { return null; } // Don't create a marker for each waypoint
           }).addTo(map);
+
+          console.log('Route added between', start, 'and', end);
       }
+
 
       this.marker.on('click', () => {
           this.infoWindow = L.popup({ maxWidth: 500 })
