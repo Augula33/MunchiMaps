@@ -379,6 +379,8 @@ to {
 .info-window-content {
   display: flex;
   align-items: flex-start;
+  color: #92b3b5;
+  background: black;
 
 }
 .info-window-image {
@@ -448,14 +450,19 @@ to {
 /*review section inside the info window */
 .review-section {
   margin-top: 20px;
+  color: #92b3b5;
+  background: black;
 }
 
 .review-section h3, .review-section h4 {
   margin-bottom: 10px;
+  color: #92b3b5;
+  background: black;
 }
 
 .review {
-  background-color: #f9f9f9;
+  color: #92b3b5;
+  background: black;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
@@ -469,9 +476,12 @@ to {
 .submit-review {
   display: flex;
   flex-direction: column;
+  
 }
 
 .submit-review textarea {
+  color: #92b3b5;
+  background: black;
   width: 100%;
   height: 60px;
   padding: 10px;
